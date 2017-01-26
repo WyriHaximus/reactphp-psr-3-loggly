@@ -1,0 +1,34 @@
+{
+    "name": "wyrihaximus/react-psr-3-loggly",
+    "description": "Async PSR-3 loggly logger",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cees-Jan Kiewiet",
+            "email": "ceesjank@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "psr/log": "^1.0",
+        "react/http-client": "^0.4.15"
+    },
+    "require-dev": {
+        "clue/block-react": "^1.1",
+        "phpunit/phpunit": "^5.6",
+        "squizlabs/php_codesniffer": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "WyriHaximus\\React\\PSR3\\Loggly\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "WyriHaximus\\React\\Tests\\PSR3\\Loggly\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
