@@ -46,8 +46,7 @@ abstract class AbstractLogglyLogger extends AbstractLogger
         $message = $this->processPlaceHolders($message, $context);
         $json = json_encode([
             'level'   => $level,
-            'message' => $message,
-            'level_message' => $level . ' ' . $message,
+            'message' => $level . ' ' . $message,
             'context' => $context,
         ]);
 

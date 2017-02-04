@@ -33,7 +33,7 @@ final class LogglyBulkLoggerTest extends LoggerInterfaceTest
         $request = $this->prophesize(Request::class);
         $request->end(Argument::that(function ($data) {
             $json = json_decode($data, true);
-            $this->logs[] = $json['level_message'];
+            $this->logs[] = $json['message'];
             return true;
         }))->shouldBeCalled();
 
