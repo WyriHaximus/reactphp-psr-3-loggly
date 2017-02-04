@@ -5,11 +5,12 @@ namespace WyriHaximus\React\PSR3\Loggly;
 use Prophecy\Argument;
 use Psr\Log\Test\LoggerInterfaceTest;
 use React\EventLoop\Factory;
+use React\EventLoop\LoopInterface;
 use React\HttpClient\Client;
 use React\HttpClient\Request;
 use function Clue\React\Block\await;
 
-final class LogglyLoggerTest extends LoggerInterfaceTest
+final class LogglyBulkLoggerTest extends LoggerInterfaceTest
 {
     /**
      * @var array
@@ -19,6 +20,15 @@ final class LogglyLoggerTest extends LoggerInterfaceTest
     public function getLogger()
     {
         $this->logs = [];
+
+        $loop = $this->prophesize(LoopInterface::class);
+        $loop->addTimer(
+            Argument::any(),
+            Argument::that(function ($callalble) {
+                $callalble();
+                return true;
+            })
+        )->shouldBeCalled();
 
         $request = $this->prophesize(Request::class);
         $request->end(Argument::that(function ($data) {
@@ -35,7 +45,7 @@ final class LogglyLoggerTest extends LoggerInterfaceTest
             Argument::any()
         )->shouldBeCalled()->willReturn($request->reveal());
 
-        return LogglyLogger::createFromHttpClient($httpClient->reveal(), 'abc');
+        return LogglyBulkLogger::createFromHttpClient($loop->reveal(), $httpClient->reveal(), 'abc');
     }
 
     public function getLogs()
