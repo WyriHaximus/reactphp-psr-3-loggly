@@ -22,6 +22,35 @@ This package comes with two loggers:
 * `LogglyLogger` - Basic logger that will send every `log` call directly to Loggly.
 * `LogglyBulkLogger` - Buffering logger that will log either what max buffer size is reached or when timeout is reached.
 
+## Usage
+
+Creating the `LoggerlyLogger` can be done in two ways. Either create it with an [`event loop`](https://github.com/reactphp/event-loop), this will create a [`HTTP Client`](https://github.com/reactphp/http-client) internally:
+
+```php
+$token = 'abc';
+$loop = createEventLoop();
+$logger = LogglyLogger::create($loop, $token);
+```
+
+Or create `LoggerlyLogger` with an already create [`HTTP Client`](https://github.com/reactphp/http-client).
+
+```php
+$token = 'abc';
+$httpClient = createHttpClient();
+$logger = LogglyLogger::createFromHttpClient($httpClient, $token);
+```
+
+For the `LogglyBulkLogger` a third parameter can be added. The timeout parameter, represented as float, used as maximum time to wait before sending all logs in the buffer to [`Loggly`](https://www.loggly.com/). Another difference with the bulk logger is that `createFromHttpClient` also requires the event loop due to the usage of timers:
+
+```php
+$token = 'abc';
+$loop = createEventLoop();
+$httpClient = createHttpClient();
+$logger = LogglyBulkLogger::createFromHttpClient($loop, $httpClient, $token, 12.3);
+```
+
+At this point both loggers can be used as any other ['PSR-3'](http://www.php-fig.org/psr/psr-3/) logger. 
+
 ## Contributing ##
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
