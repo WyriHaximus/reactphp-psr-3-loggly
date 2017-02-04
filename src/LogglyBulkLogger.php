@@ -49,7 +49,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
      */
     private $timer;
 
-    public static function create(LoopInterface $loop, string $token, float $timeout = 5): self
+    public static function create(LoopInterface $loop, string $token, float $timeout = 5.3): self
     {
         $resolverFactory = new ResolverFactory();
         $resolver = $resolverFactory->createCached('8.8.8.8', $loop);
@@ -64,7 +64,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         LoopInterface $loop,
         Client $httpClient,
         string $token,
-        float $timeout = 5
+        float $timeout = 5.3
     ): self {
         return new self($loop, $httpClient, $token, $timeout);
     }
