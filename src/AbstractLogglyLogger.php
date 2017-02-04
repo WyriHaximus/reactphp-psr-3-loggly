@@ -75,11 +75,15 @@ abstract class AbstractLogglyLogger extends AbstractLogger
         foreach ($context as $key => $val) {
             if (is_null($val) || is_scalar($val) || (is_object($val) && method_exists($val, '__toString'))) {
                 $replacements['{'.$key.'}'] = $val;
-            } elseif (is_object($val)) {
-                $replacements['{'.$key.'}'] = '[object '.get_class($val).']';
-            } else {
-                $replacements['{'.$key.'}'] = '['.gettype($val).']';
+                continue;
             }
+
+            if (is_object($val)) {
+                $replacements['{'.$key.'}'] = '[object '.get_class($val).']';
+                continue;
+            }
+
+            $replacements['{'.$key.'}'] = '['.gettype($val).']';
         }
 
         return strtr($message, $replacements);
