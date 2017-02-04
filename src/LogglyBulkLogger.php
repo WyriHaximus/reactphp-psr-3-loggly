@@ -52,7 +52,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
     public static function create(LoopInterface $loop, string $token, float $timeout = 5): self
     {
         $resolverFactory = new ResolverFactory();
-        $resolver = $resolverFactory->create('8.8.8.8', $loop);
+        $resolver = $resolverFactory->createCached('8.8.8.8', $loop);
 
         $factory = new HttpClientFactory();
         $httpClient = $factory->create($loop, $resolver);
