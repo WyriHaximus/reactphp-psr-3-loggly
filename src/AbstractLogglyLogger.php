@@ -72,21 +72,24 @@ abstract class AbstractLogglyLogger extends AbstractLogger
         }
 
         $replacements = [];
-        foreach ($context as $key => $val) {
-            if (is_null($val) || is_scalar($val) || (is_object($val) && method_exists($val, '__toString'))) {
-                $replacements['{'.$key.'}'] = $val;
-                continue;
-            }
-
-            if (is_object($val)) {
-                $replacements['{'.$key.'}'] = '[object '.get_class($val).']';
-                continue;
-            }
-
-            $replacements['{'.$key.'}'] = '['.gettype($val).']';
+        foreach ($context as $key => $value) {
+            $replacements['{'.$key.'}'] = $this->formatValue($value);
         }
 
         return strtr($message, $replacements);
+    }
+
+    private function formatValue($value)
+    {
+        if (is_null($value) || is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
+            return $value;
+        }
+
+        if (is_object($value)) {
+            return '[object '.get_class($value).']';
+        }
+
+        return '['.gettype($value).']';
     }
 
     private function normalizeContext(array $context): array
