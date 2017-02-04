@@ -15,6 +15,13 @@ To install via [Composer](http://getcomposer.org/), use the command below, it wi
 composer require wyrihaximus/react-psr-3-loggly 
 ```
 
+## Loggers
+
+This package comes with two loggers:
+
+* `LogglyLogger` - Basic logger that will send every `log` call directly to Loggly.
+* `LogglyBulkLogger` - Buffering logger that will log either what max buffer size is reached or when timeout is reached.
+
 ## Contributing ##
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
