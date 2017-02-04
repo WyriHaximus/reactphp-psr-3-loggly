@@ -1,4 +1,4 @@
-# ReactPHP PSR-3 Loggly logger
+# [`ReactPHP`](http://reactphp.org/) ['PSR-3'](http://www.php-fig.org/psr/psr-3/) [`Loggly`](https://www.loggly.com/) logger
 
 [![Linux Build Status](https://travis-ci.org/WyriHaximus/reactphp-psr-3-loggly.png)](https://travis-ci.org/WyriHaximus/reactphp-psr-3-loggly)
 [![Latest Stable Version](https://poser.pugx.org/WyriHaximus/react-psr-3-loggly/v/stable.png)](https://packagist.org/packages/WyriHaximus/react-psr-3-loggly)
