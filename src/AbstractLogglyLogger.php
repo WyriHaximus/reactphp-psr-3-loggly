@@ -15,8 +15,9 @@ abstract class AbstractLogglyLogger extends AbstractLogger
     public function log($level, $message, array $context = [])
     {
         checkCorrectLogLevel($level);
-        $data = $this->format($level, $message, $context);
-        $this->send($data);
+        $this->send(
+            $this->format($level, $message, $context)
+        );
     }
 
     protected function format($level, $message, array $context): string
