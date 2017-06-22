@@ -11,8 +11,9 @@
     "require": {
         "php": "^7.0",
         "psr/log": "^1.0",
+        "react/dns": "^0.4.3",
         "react/http-client": "^0.4.15",
-        "react/dns": "^0.4.3"
+        "wyrihaximus/psr-3-utilities": "dev-master"
     },
     "require-dev": {
         "clue/block-react": "^1.1",

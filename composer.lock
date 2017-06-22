@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed076d3ab1423448bbb64cca727e6369",
+    "content-hash": "8c52a71e55f751547b10fc683f2b5e3e",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -581,6 +581,49 @@
                 "stream"
             ],
             "time": "2017-01-25T14:44:14+00:00"
+        },
+        {
+            "name": "wyrihaximus/psr-3-utilities",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/WyriHaximus/php-psr-3-utilities.git",
+                "reference": "c9640369eb9d2f41e623797633ffec9ffef7f8fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/WyriHaximus/php-psr-3-utilities/zipball/c9640369eb9d2f41e623797633ffec9ffef7f8fc",
+                "reference": "c9640369eb9d2f41e623797633ffec9ffef7f8fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "api-clients/test-utilities": "^4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WyriHaximus\\PSR3\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "ceesjank@gmail.com",
+                    "homepage": "http://wyrihaximus.net/"
+                }
+            ],
+            "description": "Wrapping ticks into a promise",
+            "time": "2017-06-21 20:04:37"
         }
     ],
     "packages-dev": [
@@ -2021,7 +2064,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "wyrihaximus/psr-3-utilities": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
