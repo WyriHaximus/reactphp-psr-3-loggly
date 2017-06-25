@@ -7,7 +7,6 @@ use Psr\Log\Test\LoggerInterfaceTest;
 use React\EventLoop\Factory;
 use React\HttpClient\Client;
 use React\HttpClient\Request;
-use function Clue\React\Block\await;
 
 final class LogglyLoggerTest extends LoggerInterfaceTest
 {
@@ -24,6 +23,7 @@ final class LogglyLoggerTest extends LoggerInterfaceTest
         $request->end(Argument::that(function ($data) {
             $json = json_decode($data, true);
             $this->logs[] = $json['message'];
+
             return true;
         }))->shouldBeCalled();
 

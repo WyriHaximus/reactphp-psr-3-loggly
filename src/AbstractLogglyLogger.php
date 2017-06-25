@@ -10,8 +10,6 @@ use function WyriHaximus\PSR3\processPlaceHolders;
 
 abstract class AbstractLogglyLogger extends AbstractLogger
 {
-    abstract protected function send(string $data);
-
     public function log($level, $message, array $context = [])
     {
         checkCorrectLogLevel($level);
@@ -19,6 +17,8 @@ abstract class AbstractLogglyLogger extends AbstractLogger
             $this->format($level, $message, $context)
         );
     }
+
+    abstract protected function send(string $data);
 
     protected function format($level, $message, array $context): string
     {

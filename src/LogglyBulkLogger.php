@@ -49,6 +49,14 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
      */
     private $timer;
 
+    private function __construct(LoopInterface $loop, Client $httpClient, string $token, float $timeout)
+    {
+        $this->loop = $loop;
+        $this->httpClient = $httpClient;
+        $this->token = $token;
+        $this->timeout = $timeout;
+    }
+
     public static function create(LoopInterface $loop, string $token, float $timeout = 5.3): self
     {
         $resolverFactory = new ResolverFactory();
@@ -67,14 +75,6 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         float $timeout = 5.3
     ): self {
         return new self($loop, $httpClient, $token, $timeout);
-    }
-
-    private function __construct(LoopInterface $loop, Client $httpClient, string $token, float $timeout)
-    {
-        $this->loop = $loop;
-        $this->httpClient = $httpClient;
-        $this->token = $token;
-        $this->timeout = $timeout;
     }
 
     protected function send(string $data)

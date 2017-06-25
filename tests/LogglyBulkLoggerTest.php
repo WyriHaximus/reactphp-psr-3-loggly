@@ -8,7 +8,6 @@ use React\EventLoop\Factory;
 use React\EventLoop\LoopInterface;
 use React\HttpClient\Client;
 use React\HttpClient\Request;
-use function Clue\React\Block\await;
 
 final class LogglyBulkLoggerTest extends LoggerInterfaceTest
 {
@@ -26,6 +25,7 @@ final class LogglyBulkLoggerTest extends LoggerInterfaceTest
             Argument::any(),
             Argument::that(function ($callalble) {
                 $callalble();
+
                 return true;
             })
         )->shouldBeCalled();
@@ -34,6 +34,7 @@ final class LogglyBulkLoggerTest extends LoggerInterfaceTest
         $request->end(Argument::that(function ($data) {
             $json = json_decode($data, true);
             $this->logs[] = $json['message'];
+
             return true;
         }))->shouldBeCalled();
 

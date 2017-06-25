@@ -19,6 +19,12 @@ final class LogglyLogger extends AbstractLogglyLogger
      */
     private $token;
 
+    private function __construct(Client $httpClient, string $token)
+    {
+        $this->httpClient = $httpClient;
+        $this->token = $token;
+    }
+
     public static function create(LoopInterface $loop, string $token): self
     {
         $resolverFactory = new ResolverFactory();
@@ -33,12 +39,6 @@ final class LogglyLogger extends AbstractLogglyLogger
     public static function createFromHttpClient(Client $httpClient, string $token): self
     {
         return new self($httpClient, $token);
-    }
-
-    private function __construct(Client $httpClient, string $token)
-    {
-        $this->httpClient = $httpClient;
-        $this->token = $token;
     }
 
     protected function send(string $data)
