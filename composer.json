@@ -13,7 +13,7 @@
         "psr/log": "^1.0",
         "react/dns": "^0.4.3",
         "react/http-client": "^0.4.15",
-        "wyrihaximus/psr-3-utilities": "dev-master"
+        "wyrihaximus/psr-3-utilities": "^1.0"
     },
     "require-dev": {
         "clue/block-react": "^1.1",
