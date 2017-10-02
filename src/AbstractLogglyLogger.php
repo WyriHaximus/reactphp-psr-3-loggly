@@ -4,6 +4,11 @@ namespace WyriHaximus\React\PSR3\Loggly;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
+use React\Dns\Resolver\Factory as ResolverFactory;
+use React\EventLoop\LoopInterface;
+use React\HttpClient\Client;
+use React\HttpClient\Factory as HttpClientFactory;
+use React\Socket\Connector;
 use function WyriHaximus\PSR3\checkCorrectLogLevel;
 use function WyriHaximus\PSR3\normalizeContext;
 use function WyriHaximus\PSR3\processPlaceHolders;
@@ -36,5 +41,27 @@ abstract class AbstractLogglyLogger extends AbstractLogger
         }
 
         return $json;
+    }
+
+    protected static function createHttpClient(LoopInterface $loop): Client
+    {
+        $resolverFactory = new ResolverFactory();
+        $resolver = $resolverFactory->createCached('8.8.8.8', $loop);
+
+        if (class_exists(HttpClientFactory::class)) {
+            $factory = new HttpClientFactory();
+
+            return $factory->create($loop, $resolver);
+        }
+
+        return new Client(
+            $loop,
+            new Connector(
+                $loop,
+                [
+                    'dns' => $resolver,
+                ]
+            )
+        );
     }
 }

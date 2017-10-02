@@ -2,11 +2,9 @@
 
 namespace WyriHaximus\React\PSR3\Loggly;
 
-use React\Dns\Resolver\Factory as ResolverFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
 use React\HttpClient\Client;
-use React\HttpClient\Factory as HttpClientFactory;
 
 final class LogglyBulkLogger extends AbstractLogglyLogger
 {
@@ -59,11 +57,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
 
     public static function create(LoopInterface $loop, string $token, float $timeout = 5.3): self
     {
-        $resolverFactory = new ResolverFactory();
-        $resolver = $resolverFactory->createCached('8.8.8.8', $loop);
-
-        $factory = new HttpClientFactory();
-        $httpClient = $factory->create($loop, $resolver);
+        $httpClient = self::createHttpClient($loop);
 
         return new self($loop, $httpClient, $token, $timeout);
     }
