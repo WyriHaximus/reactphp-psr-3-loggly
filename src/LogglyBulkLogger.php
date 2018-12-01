@@ -71,9 +71,9 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         return new self($loop, $httpClient, $token, $timeout);
     }
 
-    protected function send(string $data)
+    protected function send(string $data): void
     {
-        $dataLength = strlen($data . self::LF);
+        $dataLength = \strlen($data . self::LF);
         if ($dataLength > self::MAX_LINE_LENGTH) {
             return;
         }
@@ -87,26 +87,26 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         $this->ensureTimer();
     }
 
-    private function ensureTimer()
+    private function ensureTimer(): void
     {
         if ($this->timer instanceof TimerInterface) {
             return;
         }
 
-        $this->timer = $this->loop->addTimer($this->timeout, function () {
+        $this->timer = $this->loop->addTimer($this->timeout, function (): void {
             $this->timer = null;
             $this->sendBulk();
         });
     }
 
-    private function sendBulk()
+    private function sendBulk(): void
     {
         if ($this->timer instanceof TimerInterface) {
             $this->timer->cancel();
             $this->timer = null;
         }
 
-        $data = implode(self::LF, $this->buffer);
+        $data = \implode(self::LF, $this->buffer);
 
         $this->buffer = [];
         $this->bufferSize = 0;
@@ -116,7 +116,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
             'https://logs-01.loggly.com/bulk/' . $this->token,
             [
                 'Content-Type' => 'application/json',
-                'Content-Length' => strlen($data),
+                'Content-Length' => \strlen($data),
             ],
             '1.1'
         )->end($data);

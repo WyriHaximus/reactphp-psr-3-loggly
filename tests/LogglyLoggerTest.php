@@ -8,6 +8,9 @@ use React\EventLoop\Factory;
 use React\HttpClient\Client;
 use React\HttpClient\Request;
 
+/**
+ * @internal
+ */
 final class LogglyLoggerTest extends LoggerInterfaceTest
 {
     /**
@@ -21,7 +24,7 @@ final class LogglyLoggerTest extends LoggerInterfaceTest
 
         $request = $this->prophesize(Request::class);
         $request->end(Argument::that(function ($data) {
-            $json = json_decode($data, true);
+            $json = \json_decode($data, true);
             $this->logs[] = $json['message'];
 
             return true;
@@ -43,7 +46,7 @@ final class LogglyLoggerTest extends LoggerInterfaceTest
         return $this->logs;
     }
 
-    public function testImplements()
+    public function testImplements(): void
     {
         self::assertInstanceOf('Psr\Log\LoggerInterface', LogglyLogger::create(Factory::create(), 'foo.bar'));
     }
@@ -51,7 +54,7 @@ final class LogglyLoggerTest extends LoggerInterfaceTest
     /**
      * @expectedException \Psr\Log\InvalidArgumentException
      */
-    public function testThrowsOnInvalidLevel()
+    public function testThrowsOnInvalidLevel(): void
     {
         LogglyLogger::create(Factory::create(), 'foo.bar')->log('invalid level', 'Foo');
     }

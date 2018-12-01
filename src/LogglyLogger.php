@@ -35,14 +35,14 @@ final class LogglyLogger extends AbstractLogglyLogger
         return new self($httpClient, $token);
     }
 
-    protected function send(string $data)
+    protected function send(string $data): void
     {
         $this->httpClient->request(
             'POST',
             'https://logs-01.loggly.com/inputs/' . $this->token,
             [
                 'Content-Type' => 'application/json',
-                'Content-Length' => strlen($data),
+                'Content-Length' => \strlen($data),
             ],
             '1.1'
         )->end($data);

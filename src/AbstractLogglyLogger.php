@@ -10,12 +10,12 @@ use React\HttpClient\Client;
 use React\HttpClient\Factory as HttpClientFactory;
 use React\Socket\Connector;
 use function WyriHaximus\PSR3\checkCorrectLogLevel;
-use function WyriHaximus\PSR3\normalizeContext;
+use function WyriHaximus\PSR3\normalizeContextWithFormatValue;
 use function WyriHaximus\PSR3\processPlaceHolders;
 
 abstract class AbstractLogglyLogger extends AbstractLogger
 {
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         checkCorrectLogLevel($level);
         $this->send(
@@ -28,16 +28,16 @@ abstract class AbstractLogglyLogger extends AbstractLogger
     protected function format($level, $message, array $context): string
     {
         $message = (string)$message;
-        $context = normalizeContext($context);
+        $context = normalizeContextWithFormatValue($context);
         $message = processPlaceHolders($message, $context);
-        $json = json_encode([
+        $json = \json_encode([
             'level'   => $level,
             'message' => $level . ' ' . $message,
             'context' => $context,
         ]);
 
         if ($json === false) {
-            throw new InvalidArgumentException(json_last_error_msg());
+            throw new InvalidArgumentException(\json_last_error_msg());
         }
 
         return $json;
@@ -48,7 +48,7 @@ abstract class AbstractLogglyLogger extends AbstractLogger
         $resolverFactory = new ResolverFactory();
         $resolver = $resolverFactory->createCached('8.8.8.8', $loop);
 
-        if (class_exists(HttpClientFactory::class)) {
+        if (\class_exists(HttpClientFactory::class)) {
             $factory = new HttpClientFactory();
 
             return $factory->create($loop, $resolver);
