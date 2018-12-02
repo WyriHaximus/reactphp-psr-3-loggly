@@ -10,7 +10,7 @@ use React\HttpClient\Client;
 use React\HttpClient\Factory as HttpClientFactory;
 use React\Socket\Connector;
 use function WyriHaximus\PSR3\checkCorrectLogLevel;
-use function WyriHaximus\PSR3\normalizeContextWithFormatValue;
+use function WyriHaximus\PSR3\normalizeContext;
 use function WyriHaximus\PSR3\processPlaceHolders;
 
 abstract class AbstractLogglyLogger extends AbstractLogger
@@ -28,7 +28,7 @@ abstract class AbstractLogglyLogger extends AbstractLogger
     protected function format($level, $message, array $context): string
     {
         $message = (string)$message;
-        $context = normalizeContextWithFormatValue($context);
+        $context = normalizeContext($context);
         $message = processPlaceHolders($message, $context);
         $json = \json_encode([
             'level'   => $level,
