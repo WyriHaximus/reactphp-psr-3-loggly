@@ -7,7 +7,9 @@ cache:
 
 ## Build matrix for lowest and highest possible targets
 matrix:
-  include:
+    allow_failures:
+        - php: nightly
+    include:
     - php: 7.2
       env:
         - qaExtended=true
