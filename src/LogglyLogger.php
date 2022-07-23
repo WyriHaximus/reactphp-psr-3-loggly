@@ -1,50 +1,47 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WyriHaximus\React\PSR3\Loggly;
 
-use React\EventLoop\LoopInterface;
-use React\HttpClient\Client;
+use React\Http\Browser;
+
+use function strlen;
 
 final class LogglyLogger extends AbstractLogglyLogger
 {
-    /**
-     * @var Client
-     */
-    private $httpClient;
+    private Browser $httpClient;
 
-    /**
-     * @var string
-     */
-    private $token;
+    private string $token;
 
-    private function __construct(Client $httpClient, string $token)
+    private function __construct(Browser $httpClient, string $token)
     {
         $this->httpClient = $httpClient;
-        $this->token = $token;
+        $this->token      = $token;
     }
 
-    public static function create(LoopInterface $loop, string $token): self
+    public static function create(string $token): self
     {
-        $httpClient = self::createHttpClient($loop);
-
-        return new self($httpClient, $token);
+        return new self(new Browser(), $token);
     }
 
-    public static function createFromHttpClient(Client $httpClient, string $token): self
+    public static function createFromHttpClient(Browser $httpClient, string $token): self
     {
         return new self($httpClient, $token);
     }
 
+    /**
+     * @psalm-suppress TooManyTemplateParams
+     */
     protected function send(string $data): void
     {
-        $this->httpClient->request(
-            'POST',
+        $this->httpClient->post(
             'https://logs-01.loggly.com/inputs/' . $this->token,
             [
                 'Content-Type' => 'application/json',
-                'Content-Length' => \strlen($data),
+                'Content-Length' => strlen($data),
             ],
             '1.1'
-        )->end($data);
+        );
     }
 }

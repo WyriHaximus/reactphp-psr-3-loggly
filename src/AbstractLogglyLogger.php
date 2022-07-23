@@ -1,22 +1,26 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WyriHaximus\React\PSR3\Loggly;
 
 use Psr\Log\AbstractLogger;
-use Psr\Log\InvalidArgumentException;
-use React\Dns\Config\Config;
-use React\Dns\Resolver\Factory as ResolverFactory;
-use React\EventLoop\LoopInterface;
-use React\HttpClient\Client;
-use React\HttpClient\Factory as HttpClientFactory;
-use React\Socket\Connector;
+use Stringable;
+
 use function WyriHaximus\PSR3\checkCorrectLogLevel;
 use function WyriHaximus\PSR3\normalizeContext;
 use function WyriHaximus\PSR3\processPlaceHolders;
 
 abstract class AbstractLogglyLogger extends AbstractLogger
 {
-    public function log($level, $message, array $context = []): void
+    /**
+     * @param string       $level
+     * @param array<mixed> $context
+     *
+     * @phpstan-ignore-next-line
+     * @psalm-suppress MoreSpecificImplementedParamType
+     */
+    final public function log($level, string|Stringable $message, array $context = []): void // phpcs:disabled
     {
         checkCorrectLogLevel($level);
         $this->send(
@@ -24,48 +28,23 @@ abstract class AbstractLogglyLogger extends AbstractLogger
         );
     }
 
-    abstract protected function send(string $data);
+    abstract protected function send(string $data): void;
 
-    protected function format($level, $message, array $context): string
+    /**
+     * @param array<mixed> $context
+     */
+    final protected function format(string $level, string|Stringable $message, array $context): string
     {
-        $message = (string)$message;
+        $message = (string) $message;
+        /**
+         * @psalm-suppress MixedArgumentTypeCoercion
+         */
         $context = normalizeContext($context);
         $message = processPlaceHolders($message, $context);
-        $json = \json_encode([
+        return \Safe\json_encode([
             'level'   => $level,
             'message' => $level . ' ' . $message,
             'context' => $context,
         ]);
-
-        if ($json === false) {
-            throw new InvalidArgumentException(\json_last_error_msg());
-        }
-
-        return $json;
-    }
-
-    protected static function createHttpClient(LoopInterface $loop): Client
-    {
-        $config = Config::loadSystemConfigBlocking();
-        $server = $config->nameservers ? \reset($config->nameservers) : '1.1.1.1';
-
-        $resolverFactory = new ResolverFactory();
-        $resolver = $resolverFactory->createCached($server, $loop);
-
-        if (\class_exists(HttpClientFactory::class)) {
-            $factory = new HttpClientFactory();
-
-            return $factory->create($loop, $resolver);
-        }
-
-        return new Client(
-            $loop,
-            new Connector(
-                $loop,
-                [
-                    'dns' => $resolver,
-                ]
-            )
-        );
     }
 }
