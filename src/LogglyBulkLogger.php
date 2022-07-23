@@ -1,79 +1,58 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace WyriHaximus\React\PSR3\Loggly;
 
-use React\EventLoop\LoopInterface;
-use React\EventLoop\Timer\TimerInterface;
-use React\HttpClient\Client;
+use React\EventLoop\Loop;
+use React\EventLoop\TimerInterface;
+use React\Http\Browser;
+
+use function implode;
+use function strlen;
 
 final class LogglyBulkLogger extends AbstractLogglyLogger
 {
-    const LF = "\r\n";
-    const MAX_BODY_LENGTH = 5242880;
-    const MAX_LINE_LENGTH = 1048576;
+    public const LF              = "\r\n";
+    public const MAX_BODY_LENGTH = 5242880;
+    public const MAX_LINE_LENGTH = 1048576;
 
-    /**
-     * @var LoopInterface
-     */
-    private $loop;
+    private Browser $httpClient;
 
-    /**
-     * @var Client
-     */
-    private $httpClient;
+    private string $token;
 
-    /**
-     * @var string
-     */
-    private $token;
+    private float $timeout;
 
-    /**
-     * @var float
-     */
-    private $timeout;
+    /** @var string[] */
+    private array $buffer = [];
 
-    /**
-     * @var string[]
-     */
-    private $buffer = [];
+    private int $bufferSize = 0;
 
-    /**
-     * @var int
-     */
-    private $bufferSize = 0;
+    private ?TimerInterface $timer = null;
 
-    /**
-     * @var TimerInterface
-     */
-    private $timer;
-
-    private function __construct(LoopInterface $loop, Client $httpClient, string $token, float $timeout)
+    private function __construct(Browser $httpClient, string $token, float $timeout)
     {
-        $this->loop = $loop;
         $this->httpClient = $httpClient;
-        $this->token = $token;
-        $this->timeout = $timeout;
+        $this->token      = $token;
+        $this->timeout    = $timeout;
     }
 
-    public static function create(LoopInterface $loop, string $token, float $timeout = 5.3): self
+    public static function create(string $token, float $timeout = 5.3): self
     {
-        $httpClient = self::createHttpClient($loop);
-
-        return new self($loop, $httpClient, $token, $timeout);
+        return new self(new Browser(), $token, $timeout);
     }
 
     public static function createFromHttpClient(
-        LoopInterface $loop,
-        Client $httpClient,
+        Browser $httpClient,
         string $token,
         float $timeout = 5.3
     ): self {
-        return new self($loop, $httpClient, $token, $timeout);
+        return new self($httpClient, $token, $timeout);
     }
 
     protected function send(string $data): void
     {
-        $dataLength = \strlen($data . self::LF);
+        $dataLength = strlen($data . self::LF);
         if ($dataLength > self::MAX_LINE_LENGTH) {
             return;
         }
@@ -82,7 +61,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
             $this->sendBulk();
         }
 
-        $this->buffer[] = $data;
+        $this->buffer[]    = $data;
         $this->bufferSize += $dataLength;
         $this->ensureTimer();
     }
@@ -93,7 +72,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
             return;
         }
 
-        $this->timer = $this->loop->addTimer($this->timeout, function (): void {
+        $this->timer = Loop::addTimer($this->timeout, function (): void {
             $this->timer = null;
             $this->sendBulk();
         });
@@ -102,23 +81,25 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
     private function sendBulk(): void
     {
         if ($this->timer instanceof TimerInterface) {
-            $this->timer->cancel();
+            Loop::cancelTimer($this->timer);
             $this->timer = null;
         }
 
-        $data = \implode(self::LF, $this->buffer);
+        $data = implode(self::LF, $this->buffer);
 
-        $this->buffer = [];
+        $this->buffer     = [];
         $this->bufferSize = 0;
 
-        $this->httpClient->request(
-            'POST',
+        /**
+         * @psalm-suppress TooManyTemplateParams
+         */
+        $this->httpClient->post(
             'https://logs-01.loggly.com/bulk/' . $this->token,
             [
                 'Content-Type' => 'application/json',
-                'Content-Length' => \strlen($data),
+                'Content-Length' => strlen($data),
             ],
             '1.1'
-        )->end($data);
+        );
     }
 }

@@ -1,0 +1,9 @@
+parameters:
+	checkGenericClassInNonGenericObjectType: false
+	ergebnis:
+		classesAllowedToBeExtended:
+			- WyriHaximus\React\PSR3\Loggly\AbstractLogglyLogger
+			- Psr\Log\AbstractLogger
+
+includes:
+	- ../../vendor/wyrihaximus/async-test-utilities/rules.neon
