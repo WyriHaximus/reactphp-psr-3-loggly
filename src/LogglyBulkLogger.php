@@ -13,9 +13,10 @@ use function strlen;
 
 final class LogglyBulkLogger extends AbstractLogglyLogger
 {
-    public const LF              = "\r\n";
-    public const MAX_BODY_LENGTH = 5242880;
-    public const MAX_LINE_LENGTH = 1048576;
+    private const DEFAULT_TIMEOUT = 0.1;
+    public const LF               = "\r\n";
+    public const MAX_BODY_LENGTH  = 5242880;
+    public const MAX_LINE_LENGTH  = 1048576;
 
     private Browser $httpClient;
 
@@ -37,7 +38,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         $this->timeout    = $timeout;
     }
 
-    public static function create(string $token, float $timeout = 5.3): self
+    public static function create(string $token, float $timeout = self::DEFAULT_TIMEOUT): self
     {
         return new self(new Browser(), $token, $timeout);
     }
@@ -45,7 +46,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
     public static function createFromHttpClient(
         Browser $httpClient,
         string $token,
-        float $timeout = 5.3
+        float $timeout = self::DEFAULT_TIMEOUT
     ): self {
         return new self($httpClient, $token, $timeout);
     }
