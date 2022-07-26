@@ -41,7 +41,7 @@ final class LogglyLogger extends AbstractLogglyLogger
                 'Content-Type' => 'application/json',
                 'Content-Length' => strlen($data),
             ],
-            '1.1'
+            $data
         );
     }
 }
