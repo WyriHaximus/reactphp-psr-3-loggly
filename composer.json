@@ -16,7 +16,7 @@
         "wyrihaximus/psr-3-utilities": "^2"
     },
     "require-dev": {
-        "wyrihaximus/async-test-utilities": "^5.0.19"
+        "wyrihaximus/async-test-utilities": "^5.0.23"
     },
     "autoload": {
         "psr-4": {
