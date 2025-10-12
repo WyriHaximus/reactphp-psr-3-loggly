@@ -10,14 +10,8 @@ use function strlen;
 
 final class LogglyLogger extends AbstractLogglyLogger
 {
-    private Browser $httpClient;
-
-    private string $token;
-
-    private function __construct(Browser $httpClient, string $token)
+    private function __construct(private readonly Browser $httpClient, private readonly string $token)
     {
-        $this->httpClient = $httpClient;
-        $this->token      = $token;
     }
 
     public static function create(string $token): self
@@ -25,14 +19,13 @@ final class LogglyLogger extends AbstractLogglyLogger
         return new self(new Browser(), $token);
     }
 
+    /** @phpstan-ignore shipmonk.deadMethod */
     public static function createFromHttpClient(Browser $httpClient, string $token): self
     {
         return new self($httpClient, $token);
     }
 
-    /**
-     * @psalm-suppress TooManyTemplateParams
-     */
+    /** @psalm-suppress TooManyTemplateParams */
     protected function send(string $data): void
     {
         $this->httpClient->post(
@@ -41,7 +34,7 @@ final class LogglyLogger extends AbstractLogglyLogger
                 'Content-Type' => 'application/json',
                 'Content-Length' => strlen($data),
             ],
-            $data
+            $data,
         );
     }
 }

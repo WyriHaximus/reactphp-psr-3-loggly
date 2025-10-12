@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace WyriHaximus\React\Tests\PSR3\Loggly;
 
+use PHPUnit\Framework\Attributes\Test;
 use Psr\Log\InvalidArgumentException;
 use WyriHaximus\AsyncTestUtilities\AsyncTestCase;
 use WyriHaximus\React\PSR3\Loggly\LogglyLogger;
 
 final class LogglyLoggerTest extends AsyncTestCase
 {
-    public function testThrowsOnInvalidLevel(): void
+    #[Test]
+    public function throwsOnInvalidLevel(): void
     {
         self::expectException(InvalidArgumentException::class);
 
