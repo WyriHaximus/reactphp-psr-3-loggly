@@ -6,18 +6,16 @@
         ]
     },
     "logs": {
-        "text": "./var/infection.log",
-        "summary": "./var/infection-summary.log",
-        "json": "./var/infection.json",
-        "perMutator": "./var/infection-per-mutator.md"
+        "text": "../../var/infection.log",
+        "summary": "../../var/infection-summary.log",
+        "json": "../../var/infection.json",
+        "perMutator": "../../var/infection-per-mutator.md",
+        "github": true
     },
     "minMsi": 0,
     "minCoveredMsi": 0,
     "ignoreMsiWithNoMutations": true,
     "mutators": {
         "@default": false
-    },
-    "phpUnit": {
-        "configDir": "./etc/qa/"
     }
 }

@@ -1,9 +1,15 @@
 parameters:
-	checkGenericClassInNonGenericObjectType: false
+	level: max
+	paths:
+		- ../../etc
+		- ../../src
+		- ../../tests
 	ergebnis:
-		classesAllowedToBeExtended:
+		noExtends:
+			classesAllowedToBeExtended:
 			- WyriHaximus\React\PSR3\Loggly\AbstractLogglyLogger
-			- Psr\Log\AbstractLogger
-
-includes:
-	- ../../vendor/wyrihaximus/async-test-utilities/rules.neon
+	ignoreErrors:
+		-
+			identifier: method.childParameterType
+			path: ../../src/AbstractLogglyLogger.php
+			count: 4

@@ -13,29 +13,20 @@ use function strlen;
 
 final class LogglyBulkLogger extends AbstractLogglyLogger
 {
-    private const DEFAULT_TIMEOUT = 0.1;
-    public const LF               = "\r\n";
-    public const MAX_BODY_LENGTH  = 5242880;
-    public const MAX_LINE_LENGTH  = 1048576;
-
-    private Browser $httpClient;
-
-    private string $token;
-
-    private float $timeout;
+    private const float DEFAULT_TIMEOUT = 0.1;
+    public const string LF              = "\r\n";
+    public const int MAX_BODY_LENGTH    = 5242880;
+    public const int MAX_LINE_LENGTH    = 1048576;
 
     /** @var string[] */
     private array $buffer = [];
 
     private int $bufferSize = 0;
 
-    private ?TimerInterface $timer = null;
+    private TimerInterface|null $timer = null;
 
-    private function __construct(Browser $httpClient, string $token, float $timeout)
+    private function __construct(private readonly Browser $httpClient, private readonly string $token, private readonly float $timeout)
     {
-        $this->httpClient = $httpClient;
-        $this->token      = $token;
-        $this->timeout    = $timeout;
     }
 
     public static function create(string $token, float $timeout = self::DEFAULT_TIMEOUT): self
@@ -43,10 +34,11 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         return new self(new Browser(), $token, $timeout);
     }
 
+    /** @phpstan-ignore shipmonk.deadMethod */
     public static function createFromHttpClient(
         Browser $httpClient,
         string $token,
-        float $timeout = self::DEFAULT_TIMEOUT
+        float $timeout = self::DEFAULT_TIMEOUT,
     ): self {
         return new self($httpClient, $token, $timeout);
     }
@@ -91,16 +83,14 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         $this->buffer     = [];
         $this->bufferSize = 0;
 
-        /**
-         * @psalm-suppress TooManyTemplateParams
-         */
+        /** @psalm-suppress TooManyTemplateParams */
         $this->httpClient->post(
             'https://logs-01.loggly.com/bulk/' . $this->token,
             [
                 'Content-Type' => 'application/json',
                 'Content-Length' => strlen($data),
             ],
-            $data
+            $data,
         );
     }
 }

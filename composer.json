@@ -1,52 +1,57 @@
 {
-    "name": "wyrihaximus/react-psr-3-loggly",
-    "description": "\ud83e\udeb5 Async PSR-3 loggly logger",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Cees-Jan Kiewiet",
-            "email": "ceesjank@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^8.1",
-        "psr/log": "^2",
-        "react/event-loop": "^1.3",
-        "react/http": "^1.6",
-        "wyrihaximus/psr-3-utilities": "^2"
-    },
-    "require-dev": {
-        "wyrihaximus/async-test-utilities": "^5.0.23"
-    },
-    "autoload": {
-        "psr-4": {
-            "WyriHaximus\\React\\PSR3\\Loggly\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "WyriHaximus\\React\\Tests\\PSR3\\Loggly\\": "tests/"
-        }
-    },
-    "config": {
-        "allow-plugins": {
-            "composer/package-versions-deprecated": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "ergebnis/composer-normalize": true,
-            "icanhazstring/composer-unused": true,
-            "infection/extension-installer": true
-        },
-        "platform": {
-            "php": "8.1.1"
-        },
-        "sort-packages": true
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "composer normalize"
-        ],
-        "post-update-cmd": [
-            "composer normalize"
-        ]
+  "name": "wyrihaximus/react-psr-3-loggly",
+  "description": "\ud83e\udeb5 Async PSR-3 loggly logger",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Cees-Jan Kiewiet",
+      "email": "ceesjank@gmail.com"
     }
+  ],
+  "require": {
+    "php": "^8.4",
+    "ext-json": "^8.4",
+    "psr/log": "^3.0.2",
+    "react/event-loop": "^1.5.0",
+    "react/http": "^1.11.0",
+    "wyrihaximus/psr-3-utilities": "^2.2.0"
+  },
+  "require-dev": {
+    "wyrihaximus/async-test-utilities": "^10.4.0",
+    "wyrihaximus/makefiles": "^0.7.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "WyriHaximus\\React\\PSR3\\Loggly\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "WyriHaximus\\React\\Tests\\PSR3\\Loggly\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true,
+      "icanhazstring/composer-unused": true,
+      "infection/extension-installer": true,
+      "phpstan/extension-installer": true,
+      "wyrihaximus/makefiles": true,
+      "wyrihaximus/test-utilities": true
+    },
+    "platform": {
+      "php": "8.4.13"
+    },
+    "sort-packages": true
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "make on-install-or-update || true"
+    ],
+    "post-update-cmd": [
+      "make on-install-or-update || true"
+    ]
+  }
 }
