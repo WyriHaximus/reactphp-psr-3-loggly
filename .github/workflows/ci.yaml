@@ -92,7 +92,7 @@ jobs:
       image: ghcr.io/wyrihaximusnet/php:${{ matrix.php }}-nts-buster-dev-root
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
-      - uses: ramsey/composer-install@v2
+      - uses: ramsey/composer-install@1919f6c305aea6ab10e6181a8ddf72317ad77e0e # 2.3.1
         with:
           dependency-versions: ${{ matrix.composer }}
       - name: Fetch Tags
@@ -129,7 +129,7 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: pcov
           extensions: intl, sodium
-      - uses: ramsey/composer-install@v2
+      - uses: ramsey/composer-install@1919f6c305aea6ab10e6181a8ddf72317ad77e0e # 2.3.1
         with:
           dependency-versions: ${{ matrix.composer }}
       - run: make unit-testing-raw || true
