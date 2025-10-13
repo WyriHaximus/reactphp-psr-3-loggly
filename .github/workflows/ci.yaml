@@ -164,7 +164,7 @@ jobs:
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
       - name: json-syntax-check
-        uses: limitusus/json-syntax-check@2505a77aa5181d0d0f5b94cf5aaaf3abb07a2cb5 # v1
+        uses: limitusus/json-syntax-check@2505a77aa5181d0d0f5b94cf5aaaf3abb07a2cb5 # v1.0.3
         with:
           pattern: "\\.json$"
   check-mark:
