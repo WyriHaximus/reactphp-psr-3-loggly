@@ -29,6 +29,7 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
     {
     }
 
+    /** @api */
     public static function create(string $token, float $timeout = self::DEFAULT_TIMEOUT): self
     {
         return new self(new Browser(), $token, $timeout);

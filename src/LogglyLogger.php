@@ -14,6 +14,7 @@ final class LogglyLogger extends AbstractLogglyLogger
     {
     }
 
+    /** @api */
     public static function create(string $token): self
     {
         return new self(new Browser(), $token);
