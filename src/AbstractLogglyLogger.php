@@ -36,7 +36,6 @@ abstract class AbstractLogglyLogger implements LoggerInterface
     {
         $message = (string) $message;
         /**
-         * @psalm-suppress MixedArgumentTypeCoercion
          */
         $context = Utils::normalizeContext($context);
         $message = Utils::processPlaceHolders($message, $context);

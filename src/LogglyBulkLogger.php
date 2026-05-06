@@ -84,7 +84,6 @@ final class LogglyBulkLogger extends AbstractLogglyLogger
         $this->buffer     = [];
         $this->bufferSize = 0;
 
-        /** @psalm-suppress TooManyTemplateParams */
         $this->httpClient->post(
             'https://logs-01.loggly.com/bulk/' . $this->token,
             [

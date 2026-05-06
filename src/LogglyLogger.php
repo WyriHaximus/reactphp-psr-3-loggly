@@ -26,7 +26,6 @@ final class LogglyLogger extends AbstractLogglyLogger
         return new self($httpClient, $token);
     }
 
-    /** @psalm-suppress TooManyTemplateParams */
     protected function send(string $data): void
     {
         $this->httpClient->post(
