@@ -16,8 +16,6 @@ abstract class AbstractLogglyLogger implements LoggerInterface
     /**
      * @param string               $level
      * @param array<string, mixed> $context
-     *
-     * @phpstan-ignore typeCoverage.paramTypeCoverage
      */
     final public function log($level, string|Stringable $message, array $context = []): void // phpcs:disabled
     {
