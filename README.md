@@ -6,7 +6,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-psr-3-loggly/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-psr-3-loggly/?branch=master)
 [![License](https://poser.pugx.org/WyriHaximus/react-psr-3-loggly/license.png)](https://packagist.org/packages/wyrihaximus/react-psr-3-loggly)
 
-### Installation ###
+## Installation
 
 To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `^`.
 
@@ -50,11 +50,11 @@ $logger = LogglyBulkLogger::createFromHttpClient($loop, $httpClient, $token, 12.
 
 At this point both loggers can be used as any other ['PSR-3'](http://www.php-fig.org/psr/psr-3/) logger.
 
-## Contributing ##
+## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## License ##
+## License
 
 Copyright 2026 [Cees-Jan Kiewiet](http://wyrihaximus.net/)
 
