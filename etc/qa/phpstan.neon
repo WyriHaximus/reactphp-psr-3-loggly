@@ -4,6 +4,8 @@ parameters:
 		- ../../etc
 		- ../../src
 		- ../../tests
+	excludePaths:
+		- ../../tests/SpyBrowser.php
 	ergebnis:
 		noExtends:
 			classesAllowedToBeExtended:
