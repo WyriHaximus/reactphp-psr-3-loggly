@@ -16,6 +16,7 @@
     "minCoveredMsi": 0,
     "ignoreMsiWithNoMutations": true,
     "mutators": {
-        "@default": false
-    }
+        "@default": true
+    },
+    "threads": 64
 }

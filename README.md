@@ -6,7 +6,7 @@
 [![Code Coverage](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-psr-3-loggly/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/WyriHaximus/reactphp-psr-3-loggly/?branch=master)
 [![License](https://poser.pugx.org/WyriHaximus/react-psr-3-loggly/license.png)](https://packagist.org/packages/wyrihaximus/react-psr-3-loggly)
 
-### Installation ###
+## Installation
 
 To install via [Composer](http://getcomposer.org/), use the command below, it will automatically detect the latest version and bind it with `^`.
 
@@ -23,7 +23,7 @@ This package comes with two loggers:
 
 ## Usage
 
-Creating the `LoggerlyLogger` can be done in two ways. Either create it with an [`event loop`](https://github.com/reactphp/event-loop), this will create a [`HTTP Client`](https://github.com/reactphp/http-client) internally:
+Creating the `LogglyLogger` can be done in two ways. Either create it with an [`event loop`](https://github.com/reactphp/event-loop), this will create a [`HTTP Client`](https://github.com/reactphp/http-client) internally:
 
 ```php
 $token = 'abc';
@@ -31,7 +31,7 @@ $loop = createEventLoop();
 $logger = LogglyLogger::create($loop, $token);
 ```
 
-Or create `LoggerlyLogger` with an already create [`HTTP Client`](https://github.com/reactphp/http-client).
+Or create `LogglyLogger` with an already create [`HTTP Client`](https://github.com/reactphp/http-client).
 
 ```php
 $token = 'abc';
@@ -50,31 +50,32 @@ $logger = LogglyBulkLogger::createFromHttpClient($loop, $httpClient, $token, 12.
 
 At this point both loggers can be used as any other ['PSR-3'](http://www.php-fig.org/psr/psr-3/) logger.
 
-## Contributing ##
+## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## License ##
+## License
 
 Copyright 2026 [Cees-Jan Kiewiet](http://wyrihaximus.net/)
 
-Permission is hereby granted, free of charge, to any person
-obtaining a copy of this software and associated documentation
-files (the "Software"), to deal in the Software without
-restriction, including without limitation the rights to use,
-copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the
-Software is furnished to do so, subject to the following
-conditions:
+<!-- vale write-good = NO -->
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+<!-- vale neighbor.AllCapsProse = NO -->
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+<!-- vale neighbor.AllCapsProse = yes -->
+<!-- vale write-good = yes -->
